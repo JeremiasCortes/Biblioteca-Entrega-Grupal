@@ -48,6 +48,29 @@ def agregar_libro():
 
     return redirect(url_for('get_libros'))
 
+#Elimina el libro mediante la ID
+@app.route('/eliminar_libro/<int:id>')
+def eliminar_libro(id):
+    libro = Libro.query.get(id)
+    if libro:
+        db.session.delete(libro)
+        db.session.commit()
+    return redirect(url_for('get_libros'))
+
+@app.route('/editar_libro/<int:libro_id>', methods=["POST", "GET"])
+def editar_libro(libro_id):
+    libro = Libro.query.get(libro_id)
+
+    if request.method == 'POST':
+        libro.nombre = request.form.get('nombre_libro')
+        libro.autor = request.form.get('autor')
+        libro.fecha_publicacion = request.form.get('fecha_publicacion')
+        libro.paginas = int(request.form.get('n_paginas'))
+
+        db.session.commit()
+        return redirect(url_for('get_libros'))
+
+    return render_template('Biblioteca/Editar.html', libro=libro)
 
 if __name__ == '__main__':
     with app.app_context():

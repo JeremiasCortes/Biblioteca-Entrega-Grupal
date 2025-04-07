@@ -28,8 +28,14 @@
             <td>{{libro.autor}}</td>
             <td>{{libro.fecha_publicacion}}</td>
             <td>{{libro.paginas}}</td>
-            <td><a href="" class="btn btn-warning"><i class="bi bi-pencil"></i></a></td>
-            <td><a href="" class="btn btn-danger"><i class="bi bi-trash"></i></a></td>
+            <td>
+                <a href="{{ url_for('editar_libro', libro_id=libro.id) }}" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i>
+                </a>
+            </td>
+            <td><a href="{{ url_for('eliminar_libro', id=libro.id) }}" class="btn btn-danger"><i
+                    class="bi bi-trash"></i></a></td>
+
         </tr>
         {% endfor %}
         </tbody>
